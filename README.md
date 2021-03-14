@@ -1,7 +1,6 @@
 # StepTasks
 home work from academy
-
-<p><strong><span style="font-size: 14px;">Folder TaskSerialize:</span></strong></p>
+<p><span style="font-size: 14px; text-shadow: rgba(136, 136, 136, 0.8) 1px 1px 2px;"><strong><span style="color: rgb(65, 168, 95);">Folder TaskSerialize:</span></strong></span></p>
 <p><span style="font-size: 12px;">Разработать класс &laquo;Счет для оплаты&raquo;. В классе предусмотреть следующие поля:</span></p>
 <p><span style="font-size: 12px;">-оплата за день;</span></p>
 <p><span style="font-size: 12px;">-количество дней;</span></p>
