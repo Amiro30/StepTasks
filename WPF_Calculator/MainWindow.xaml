@@ -5,10 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Calculator"
         mc:Ignorable="d"
-         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="MainWindow" Height="450" Width="800" AllowsTransparency="True" >
-    <Grid Background="#E5000000">
-        
-
-    </Grid>
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        Height="550" Width="300" AllowsTransparency="True" 
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="{x:Null}">
+    <Border Background="#E5000000" CornerRadius="10" >
+        <Grid Height="210">
+            <StackPanel>
+                <Button HorizontalAlignment="Left" Margin="10" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{StaticResource PrimaryHueMidForegroundBrush}">
+                    <materialDesign:PackIcon Kind="Menu" Foreground="{StaticResource PrimaryHueLightForegroundBrush}"/>
+                </Button>
+                <TextBlock FontSize="15" FontFamily="Oswald" Text="30 + 20 = 50" TextAlignment="Right"
+                           Foreground="{StaticResource PrimaryHueLightForegroundBrush}" Margin="20 0 20 10"/>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom">
+                <TextBlock FontSize="20" FontFamily="Oswald" Text="5 + 5 + 10 -" TextAlignment="Right"
+                           Foreground="{StaticResource PrimaryHueLightForegroundBrush}" Margin="20 0"/>
+                <TextBlock FontSize="50" FontFamily="Oswald" Text="15" TextAlignment="Right"
+                           Foreground="#FF5885A4" Margin="20 0">
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="1" Color="#FF5885A4"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
