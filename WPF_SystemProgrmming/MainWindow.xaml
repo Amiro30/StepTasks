@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock Name="txtInput" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap" Text="Input words here" VerticalAlignment="Top" Width="792"/>
-        <Button Content="StartSearch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="268" Margin="221,96,0,0" Height="52" Click="Start_Click"/>
+        <TextBox Name="txtInput" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap"  VerticalAlignment="Top" Width="400" Margin="0,29,0,0"/>
+        <Button Content="StartSearch" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="0,120,0,0" Height="52" Click="Start_Click"/>
+        <TextBox HorizontalAlignment="Left" Height="29" IsReadOnly="True" TextWrapping="Wrap" Text="Please, input words below, with comma separator.  
+                 Or load a file with words." VerticalAlignment="Top" Width="782"
+                 FontSize="20" FontFamily="Oswald"  TextAlignment="Right"
+                 Foreground="#FF5885A4"/>
 
     </Grid>
 </Window>
