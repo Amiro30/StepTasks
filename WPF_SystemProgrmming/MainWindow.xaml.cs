@@ -34,15 +34,12 @@ namespace WPF_SystemProgrmming
         private void Start_Click(object sender, RoutedEventArgs e)
         {
 
-            FileOperator fileOperator = new FileOperator();
 
             //var words =  HandleInput(txtInput.Text);
 
             string[] words = new[] {"visualfafa", "fghj"};
 
-            var filesInfo = fileOperator.GetFilesInfo("txt");
-
-            var matchedFiles = fileOperator.GetMatchingFiles(words, filesInfo);
+            OperationsHandler operationsHandler = new OperationsHandler(words);
 
 
         }
