@@ -3,22 +3,44 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using WPF_SystemProgrmming;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using WPF_SystemProgrmming.Common;
 
 
 namespace WPF_SystemProgrmming
 {
-    class FileOperator
+    class FileOperator 
     {
-        public void CreateReportFile()
+        public void CreateReportFile(IList<FileInfo> matchedFiles, int substitutions )
         {
+            int count = 0;
+            var _data = new Additionaldata()
+            {
+                Substitutions = substitutions,
+                ReportModels = new List<ReportModel>()
+            };
 
+            foreach (var f in matchedFiles)
+            {
+                _data.ReportModels.Add(new ReportModel()
+                {
+                    Id = count++,
+                    FileName = f.Name,
+                    FilePath = f.FullName,
+                    SizeInBytes = f.Length,
+                    DateCreated = f.CreationTime,
+                });
+            }
+            //using ContractResolver because of FileInfo
+            string json = JsonConvert.SerializeObject(_data,
+                new JsonSerializerSettings { ContractResolver = new FileInfoContractResolver()});
+
+            File.WriteAllText(Constants.targetPath + @"\ReportFile.txt", json);
         }
 
-
-        public void OverwriteBadWordsWithAsteriks(string[] searchwords, IList<FileInfo> files)
+        public void OverwriteBadWordsWithAsteriks(string[] searchwords, IList<FileInfo> files, out int substitutions)
         {
+            substitutions = 0;
             bool isWritten = false;
             string destFile = null;
             Directory.CreateDirectory(Constants.targetPath);
@@ -34,6 +56,7 @@ namespace WPF_SystemProgrmming
 
                         File.WriteAllText(destFile, fileText);
                         isWritten = true;
+                        substitutions++;
                     }
                     else
                     {
@@ -41,9 +64,9 @@ namespace WPF_SystemProgrmming
 
                         File.WriteAllText(destFile, fileText);
                         isWritten = false;
+                        substitutions++;
                     }
-
-                    Debug.Write($"Overwritten files : {destFile}");
+                    Debug.WriteLine($"Overwritten files : {destFile}");
                 }
             }
         }
@@ -115,6 +138,7 @@ namespace WPF_SystemProgrmming
                     }
                 }
             }
+
             return filesInfos;
         }
 
@@ -128,6 +152,7 @@ namespace WPF_SystemProgrmming
             {
                 fileContents = System.IO.File.ReadAllText(name);
             }
+
             return fileContents;
         }
     }

@@ -12,6 +12,7 @@ namespace WPF_SystemProgrmming
         public OperationsHandler(string[] words)
         {
             FileOperator fileOperator = new FileOperator();
+            int substitutions;
 
             words = new[] { "visualfafa", "fghj" };
 
@@ -20,7 +21,9 @@ namespace WPF_SystemProgrmming
 
             fileOperator.CopyFilesWithWords(matchedFiles);
 
-            fileOperator.OverwriteBadWordsWithAsteriks(words, matchedFiles);
+            fileOperator.OverwriteBadWordsWithAsteriks(words, matchedFiles, out substitutions);
+
+            fileOperator.CreateReportFile(matchedFiles, substitutions);
 
         }
 
