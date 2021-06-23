@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_Calculator", "WPF_Calcu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_ColoredButtons", "WPF_ColoredButtons\WPF_ColoredButtons.csproj", "{31F0E1F5-1FA7-4876-A336-F1599D2F6F1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_SystemProgrmming", "WPF_SystemProgrmming\WPF_SystemProgrmming.csproj", "{B15C5AE3-70F5-4CDA-8E15-4058BDEAC8CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF_SystemProgramming", "WPF_SystemProgrmming\WPF_SystemProgramming.csproj", "{B15C5AE3-70F5-4CDA-8E15-4058BDEAC8CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

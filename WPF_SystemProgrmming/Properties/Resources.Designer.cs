@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace WPF_SystemProgrmming.Properties
+namespace WPF_SystemProgramming.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

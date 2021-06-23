@@ -1,4 +1,4 @@
-﻿namespace WPF_SystemProgrmming
+﻿namespace WPF_SystemProgramming
 {
     public static class Constants
     {

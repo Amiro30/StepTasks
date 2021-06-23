@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json.Serialization;
 
-namespace WPF_SystemProgrmming.Common
+namespace WPF_SystemProgramming.Common
 {
     public class FileInfoContractResolver : DefaultContractResolver
     {

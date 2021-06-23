@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using WPF_SystemProgrmming.Common;
+using WPF_SystemProgramming.Common;
 
 
-namespace WPF_SystemProgrmming
+namespace WPF_SystemProgramming
 {
     class FileOperator 
     {
@@ -98,7 +98,6 @@ namespace WPF_SystemProgrmming
                 }
             }
         }
-
 
         public IList<FileInfo> FindWordsInFiles(string[] searchwords, IList<FileInfo> files)
         {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF_SystemProgrmming;
+using WPF_SystemProgramming;
 
-namespace WPF_SystemProgrmming
+namespace WPF_SystemProgramming
 {
     public class OperationsHandler
     {

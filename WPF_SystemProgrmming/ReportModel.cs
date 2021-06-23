@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace WPF_SystemProgrmming
+namespace WPF_SystemProgramming
 {
     public class ReportModel
     {
