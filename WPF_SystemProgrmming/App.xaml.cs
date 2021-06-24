@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using System.Windows;
 
 namespace WPF_SystemProgramming
@@ -13,5 +8,29 @@ namespace WPF_SystemProgramming
     /// </summary>
     public partial class App : Application
     {
+        private Mutex _instanceMutex = null;
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            // check that there is only one instance of the control panel running...
+            bool createdNew;
+            _instanceMutex = new Mutex(true, @"WPF_SystemProgramming_Single", out createdNew);
+            if (!createdNew)
+            {
+                _instanceMutex = null;
+                MessageBox.Show("Only one instance could be run at time");
+                Application.Current.Shutdown();
+                return;
+            }
+
+            base.OnStartup(e);
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_instanceMutex != null)
+                _instanceMutex.ReleaseMutex();
+            base.OnExit(e);
+        }
     }
 }
