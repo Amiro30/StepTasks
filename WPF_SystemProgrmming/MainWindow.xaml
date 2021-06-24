@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_SystemProgramming"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="750" Width="600">
     <Grid>
-        <TextBox Name="txtInput" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap"  VerticalAlignment="Top" Width="400" Margin="0,29,0,0"/>
-        <Button Content="StartSearch" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" Margin="0,120,0,0" Height="52" Click="Start_Click"/>
-        <TextBox HorizontalAlignment="Left" Height="29" IsReadOnly="True" TextWrapping="Wrap" Text="Please, input words below, with comma separator.  
-                 Or load a file with words." VerticalAlignment="Top" Width="782"
-                 FontSize="20" FontFamily="Oswald"  TextAlignment="Right"
-                 Foreground="#FF5885A4"/>
+        <TextBox Name="txtInput" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap"  VerticalAlignment="Top" Width="592" Margin="0,29,0,0"/>
+        <Button Content="StartSearch" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,120,0,0" Height="42" Click="Start_Click"/>
+        <TextBox Height="29" IsReadOnly="True" TextWrapping="Wrap" Text="Please, input words below, with comma separator." VerticalAlignment="Top" Width="592"
+                 FontSize="20" FontFamily="Oswald"  TextAlignment="Center"
+                 Foreground="BlueViolet"  Background="Bisque"/>
+        <Button Content="Or press to load a file with words" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,176,0,0" Height="42"/>
+        <TextBlock x:Name="resultsWindow" Margin="10,273,10,0"/>
+        <ProgressBar x:Name="dashboardProgress" Value="0" Height="30" Margin="10,230,10,459" />
 
     </Grid>
 </Window>

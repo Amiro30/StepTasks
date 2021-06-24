@@ -9,25 +9,41 @@ namespace WPF_SystemProgramming
 {
     public class OperationsHandler
     {
+        private string[] _words;
+
         public OperationsHandler(string[] words)
+        {
+            _words = words;
+        }
+
+        public async Task HandleAllOperations()
         {
             FileOperator fileOperator = new FileOperator();
             int substitutions;
 
-            words = new[] { "visualfafa", "fghj" };
+            _words = new[] { "visualfafa", "fghj" };
 
-            var filesInfo = fileOperator.GetFilesInfo("txt");
-            var matchedFiles = fileOperator.FindWordsInFiles(words, filesInfo);
+            //var filesInfo = fileOperator.GetFilesInfo("txt");
+
+            //var matchedFiles = fileOperator.FindWordsInFiles(words, filesInfo);
+
+            //fileOperator.CopyFilesWithWords(matchedFiles);
+
+            //fileOperator.OverwriteBadWordsWithAsteriks(words, matchedFiles, out substitutions);
+
+            //fileOperator.CreateReportFile(matchedFiles, substitutions);
+
+
+            var filesInfo = await fileOperator.GetFilesInfo("txt").ConfigureAwait(false);
+
+            var matchedFiles = await fileOperator.FindWordsInFiles(_words, filesInfo).ConfigureAwait(false);
 
             fileOperator.CopyFilesWithWords(matchedFiles);
 
-            fileOperator.OverwriteBadWordsWithAsteriks(words, matchedFiles, out substitutions);
+            fileOperator.OverwriteBadWordsWithAsteriks(_words, matchedFiles, out substitutions);
 
-            fileOperator.CreateReportFile(matchedFiles, substitutions);
-
+            await fileOperator.CreateReportFile(matchedFiles, substitutions).ConfigureAwait(false);
         }
-
-        //public async Task 
 
     }
 }

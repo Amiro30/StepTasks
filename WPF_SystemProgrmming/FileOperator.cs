@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WPF_SystemProgramming.Common;
 
@@ -11,7 +12,7 @@ namespace WPF_SystemProgramming
 {
     class FileOperator 
     {
-        public void CreateReportFile(IList<FileInfo> matchedFiles, int substitutions )
+        public async Task CreateReportFile(IList<FileInfo> matchedFiles, int substitutions )
         {
             int count = 0;
             var _data = new Additionaldata()
@@ -20,22 +21,41 @@ namespace WPF_SystemProgramming
                 ReportModels = new List<ReportModel>()
             };
 
-            foreach (var f in matchedFiles)
+            await Task.Run(() =>
             {
-                _data.ReportModels.Add(new ReportModel()
+                foreach (var f in matchedFiles)
                 {
-                    Id = count++,
-                    FileName = f.Name,
-                    FilePath = f.FullName,
-                    SizeInBytes = f.Length,
-                    DateCreated = f.CreationTime,
-                });
-            }
-            //using ContractResolver because of FileInfo
-            string json = JsonConvert.SerializeObject(_data,
-                new JsonSerializerSettings { ContractResolver = new FileInfoContractResolver()});
+                    _data.ReportModels.Add(new ReportModel()
+                    {
+                        Id = count++,
+                        FileName = f.Name,
+                        FilePath = f.FullName,
+                        SizeInBytes = f.Length,
+                        DateCreated = f.CreationTime,
+                    });
+                }
+                //using ContractResolver because of FileInfo
+                string json = JsonConvert.SerializeObject(_data,
+                    new JsonSerializerSettings { ContractResolver = new FileInfoContractResolver() });
 
-            File.WriteAllText(Constants.targetPath + @"\ReportFile.txt", json);
+                File.WriteAllText(Constants.targetPath + @"\ReportFile.txt", json);
+            });
+            //foreach (var f in matchedFiles)
+            //{
+            //    _data.ReportModels.Add(new ReportModel()
+            //    {
+            //        Id = count++,
+            //        FileName = f.Name,
+            //        FilePath = f.FullName,
+            //        SizeInBytes = f.Length,
+            //        DateCreated = f.CreationTime,
+            //    });
+            //}
+            ////using ContractResolver because of FileInfo
+            //string json = JsonConvert.SerializeObject(_data,
+            //    new JsonSerializerSettings { ContractResolver = new FileInfoContractResolver()});
+
+            //File.WriteAllText(Constants.targetPath + @"\ReportFile.txt", json);
         }
 
         public void OverwriteBadWordsWithAsteriks(string[] searchwords, IList<FileInfo> files, out int substitutions)
@@ -99,44 +119,77 @@ namespace WPF_SystemProgramming
             }
         }
 
-        public IList<FileInfo> FindWordsInFiles(string[] searchwords, IList<FileInfo> files)
+        public async Task<IList<FileInfo>> FindWordsInFiles(string[] searchwords, IList<FileInfo> files)
         {
             var matchedFiles = new List<FileInfo>();
-            foreach (var word in searchwords)
+            await Task.Run(() =>
             {
-                var queryMatchingFiles =
-                    from file in files
-                    let fileText = GetFileText(file.FullName)
-                    where fileText.Contains(word)
-                    select file;
+                foreach (var word in searchwords)
+                {
+                    var queryMatchingFiles =
+                        from file in files
+                        let fileText = GetFileText(file.FullName)
+                        where fileText.Contains(word)
+                        select file;
 
-                matchedFiles.AddRange(queryMatchingFiles);
-            }
+                    matchedFiles.AddRange(queryMatchingFiles);
+                }
+            });
+            //foreach (var word in searchwords)
+            //{
+            //    var queryMatchingFiles =
+            //        from file in files
+            //        let fileText = GetFileText(file.FullName)
+            //        where fileText.Contains(word)
+            //        select file;
+
+            //    matchedFiles.AddRange(queryMatchingFiles);
+            //}
 
             return matchedFiles;
         }
 
-        public IList<FileInfo> GetFilesInfo(string fileExtension)
+        public async Task<IList<FileInfo>> GetFilesInfo(string fileExtension)
         {
             //search in all drives  and all directories to search for all .txt files
             List<FileInfo> filesInfos = new List<FileInfo>();
 
-            foreach (DriveInfo drive in DriveInfo.GetDrives().Where(x => x.IsReady))
+            await Task.Run(() =>
             {
-                var dirs = drive.RootDirectory.GetDirectories();
-                foreach (var dir in dirs)
+                foreach (DriveInfo drive in DriveInfo.GetDrives().Where(x => x.IsReady))
                 {
-                    try
+                    var dirs = drive.RootDirectory.GetDirectories();
+                    foreach (var dir in dirs)
                     {
-                        var fileList = dir.GetFiles("*." + $"{fileExtension}", System.IO.SearchOption.AllDirectories);
-                        filesInfos.AddRange(fileList);
-                    }
-                    catch (UnauthorizedAccessException e)
-                    {
-                        Debug.WriteLine($"Folder inaccessible due to permissions {e.Message}");
+                        try
+                        {
+                            var fileList = dir.GetFiles("*." + $"{fileExtension}", System.IO.SearchOption.AllDirectories);
+                            filesInfos.AddRange(fileList);
+                        }
+                        catch (UnauthorizedAccessException e)
+                        {
+                            Debug.WriteLine($"Folder inaccessible due to permissions {e.Message}");
+                        }
                     }
                 }
-            }
+            });
+
+            //foreach (DriveInfo drive in DriveInfo.GetDrives().Where(x => x.IsReady))
+            //{
+            //    var dirs = drive.RootDirectory.GetDirectories();
+            //    foreach (var dir in dirs)
+            //    {
+            //        try
+            //        {
+            //            var fileList = dir.GetFiles("*." + $"{fileExtension}", System.IO.SearchOption.AllDirectories);
+            //            filesInfos.AddRange(fileList);
+            //        }
+            //        catch (UnauthorizedAccessException e)
+            //        {
+            //            Debug.WriteLine($"Folder inaccessible due to permissions {e.Message}");
+            //        }
+            //    }
+            //}
 
             return filesInfos;
         }

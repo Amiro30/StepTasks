@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_SystemProgrmming;
 
 namespace WPF_SystemProgramming
 {
@@ -31,15 +32,21 @@ namespace WPF_SystemProgramming
 
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
+        private async void Start_Click(object sender, RoutedEventArgs e)
         {
+            
+            //ProgresBar win2 = new ProgresBar();
+            //win2.Show();
+           
 
 
             //var words =  HandleInput(txtInput.Text);
 
-            string[] words = new[] {"visualfafa", "fghj"};
+            //string[] words = new[] {"visualfafa", "fghj"};
 
-            OperationsHandler operationsHandler = new OperationsHandler(words);
+            //OperationsHandler operationsHandler = new OperationsHandler(words);
+
+            //await operationsHandler.HandleAllOperations();
 
 
         }
@@ -52,5 +59,6 @@ namespace WPF_SystemProgramming
 
             return words;
         }
+
     }
 }
