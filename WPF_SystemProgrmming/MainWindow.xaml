@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_SystemProgramming"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="600">
+        Title="MainWindow" Height="750" Width="600" ResizeMode="NoResize">
     <Grid>
-        <TextBox Name="txtInput" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap"  VerticalAlignment="Top" Width="592" Margin="0,29,0,0"/>
-        <Button Content="StartSearch" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,120,0,0" Height="42" Click="Start_Click"/>
+        <TextBox Name="txtInput" FontSize="20" FontFamily="Oswald" HorizontalAlignment="Left" Height="91" TextWrapping="Wrap"  VerticalAlignment="Top" Width="592" Margin="0,29,0,0"/>
+        <Button Content="StartSearch" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="307" Margin="0,120,0,0" Height="42" Click="Start_Click"/>
         <TextBox Height="29" IsReadOnly="True" TextWrapping="Wrap" Text="Please, input words below, with comma separator." VerticalAlignment="Top" Width="592"
                  FontSize="20" FontFamily="Oswald"  TextAlignment="Center"
                  Foreground="BlueViolet"  Background="Bisque"/>
         <Button Content="Or press to load a file with words" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,176,0,0" Height="42"/>
-        <TextBlock x:Name="resultsWindow" Margin="10,273,10,0"/>
+        <ScrollViewer Margin="0,265,10,0">
+            <TextBox x:Name="resultsWindow" Height="Auto" BorderThickness="0"
+                     Text="{Binding Text, Mode=OneWay}"
+                     IsReadOnly="True"
+                     TextWrapping="Wrap"/>
+        </ScrollViewer>
         <ProgressBar x:Name="dashboardProgress" Value="0" Height="30" Margin="10,230,10,459" />
+        <Button Content="Cancel" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="281" Margin="312,120,0,0" Height="42" Click="cancelOperation_Click"/>
 
     </Grid>
 </Window>

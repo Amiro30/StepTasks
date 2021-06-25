@@ -14,6 +14,7 @@ namespace WPF_SystemProgramming.Common
             }
 
             var contract = base.CreateContract(objectType);
+
             return contract;
         }
     }
