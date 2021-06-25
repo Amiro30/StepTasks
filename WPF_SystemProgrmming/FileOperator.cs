@@ -140,7 +140,7 @@ namespace WPF_SystemProgramming
             }
         }
 
-        public async Task<IList<FileInfo>> FindWordsInFiles(string[] searchwords, IList<FileInfo> files)
+        public async Task<IList<FileInfo>> FindWordsInFiles(string[] searchwords, IList<FileInfo> files, CancellationToken cancellationToken)
         {
             var matchedFiles = new List<FileInfo>();
             await Task.Run(() =>
@@ -153,6 +153,7 @@ namespace WPF_SystemProgramming
                         where fileText.Contains(word)
                         select file;
 
+                    cancellationToken.ThrowIfCancellationRequested();
                     matchedFiles.AddRange(queryMatchingFiles);
                 }
             });

@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using WPF_SystemProgramming.Common;
 using WPF_SystemProgrmming;
 using WPF_SystemProgrmming.Models;
@@ -34,58 +35,81 @@ namespace WPF_SystemProgramming
             InitializeComponent();
 
             txtInput.Select(0, 0);
-
         }
 
-        private async void Start_Click(object sender, RoutedEventArgs e)
+        private void Start_Click(object sender, RoutedEventArgs e)
         {
-            cts = new CancellationTokenSource();
-            Progress<ProgressReportModel> progress = new Progress<ProgressReportModel>();
-            progress.ProgressChanged += ReportProgress;
-            
-            var watch = System.Diagnostics.Stopwatch.StartNew();
+            HandleFlow(txtInput.Text);
+        }
 
-            try
+        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "TXT Files (*.txt)|*.txt";
+
+            if (dialog.ShowDialog() == true)
             {
+                var fileContent = File.ReadAllText(dialog.FileName);
+                PrintResults(fileContent);
 
-                var _words = HandleInput(txtInput.Text);
-
-                //string[] _words = new[] { "visualfafa", "fghj" };
-                FileOperator fileOperator = new FileOperator();
-                int substitutions;
-
-                PrintResults(null, "\nGetting all files...");
-                var filesInfo = await fileOperator.GetFilesInfo("txt", progress, cts.Token).ConfigureAwait(false);
-
-
-                PrintResults(null, "\nFinding words in files...");
-                var matchedFiles = await fileOperator.FindWordsInFiles(_words, filesInfo).ConfigureAwait(false);
-
-
-                PrintResults(null, $"\nCopying founded files to {Constants.targetPath}...");
-                fileOperator.CopyFilesWithWords(matchedFiles);
-
-                PrintResults(null, "\nOverwriting Bad Words to Asteriks ...");
-                fileOperator.OverwriteBadWordsWithAsteriks(_words, matchedFiles, out substitutions);
-
-
-                PrintResults(null, "\nCreating report file...");
-                var reportFile = await fileOperator.CreateReportFile(matchedFiles, substitutions).ConfigureAwait(false);
-
-                PrintResults(null, reportFile.ToString());
-
+                HandleFlow(fileContent);
             }
-            catch (OperationCanceledException)
+        }
+
+        private async void HandleFlow(string input)
+        {
+            if (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
             {
-                PrintResults(null, $"The async download was cancelled. {Environment.NewLine}");
-                cts.Dispose();
+                PrintResults($"Yours input empty please re-do.");
             }
+            else
+            {
+                cts = new CancellationTokenSource();
+                Progress<ProgressReportModel> progress = new Progress<ProgressReportModel>();
+                progress.ProgressChanged += ReportProgress;
 
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                var _words = HandleInput(input);
 
-            PrintResults(null, $"Total execution time: {elapsedMs}");
+                try
+                {
+                    FileOperator fileOperator = new FileOperator();
+                    int substitutions;
 
+                    PrintResults("\nGetting all files...");
+                    var filesInfo = await fileOperator.GetFilesInfo("txt", progress, cts.Token).ConfigureAwait(false);
+
+
+                    PrintResults("\nFinding words in files...");
+                    var matchedFiles = await fileOperator.FindWordsInFiles(_words, filesInfo, cts.Token).ConfigureAwait(false);
+
+
+                    PrintResults($"\nCopying founded files to {Constants.targetPath}...");
+                    fileOperator.CopyFilesWithWords(matchedFiles);
+
+
+                    PrintResults("\nOverwriting Bad Words to Asteriks ...");
+                    fileOperator.OverwriteBadWordsWithAsteriks(_words, matchedFiles, out substitutions);
+
+
+                    PrintResults("\nCreating report file...");
+                    var reportFile = await fileOperator.CreateReportFile(matchedFiles, substitutions).ConfigureAwait(false);
+
+                    PrintResults(reportFile.ToString());
+
+                }
+                catch (OperationCanceledException)
+                {
+                    PrintResults($"The async download was cancelled. {Environment.NewLine}");
+                    cts.Dispose();
+                }
+
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+
+                PrintResults($"Total execution time: {elapsedMs}");
+            }
         }
 
         private string[] HandleInput(string input)
@@ -102,7 +126,7 @@ namespace WPF_SystemProgramming
             dashboardProgress.Value = e.PercentageComplete;
         }
 
-        private void PrintResults(IList<FileInfo> results, string msg)
+        private void PrintResults(string msg, IList<FileInfo> results = null)
         {
             if (results == null && msg != null)
             {
@@ -125,11 +149,6 @@ namespace WPF_SystemProgramming
         private void cancelOperation_Click(object sender, RoutedEventArgs e)
         {
             cts.Cancel();
-        }
-        
-        private void pause_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

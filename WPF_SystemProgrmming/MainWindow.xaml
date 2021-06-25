@@ -12,7 +12,13 @@
         <TextBox Height="29" IsReadOnly="True" TextWrapping="Wrap" Text="Please, input words below, with comma separator." VerticalAlignment="Top" Width="592"
                  FontSize="20" FontFamily="Oswald"  TextAlignment="Center"
                  Foreground="BlueViolet"  Background="Bisque"/>
-        <Button Content="Or press to load a file with words" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,176,0,0" Height="42"/>
+        <Button Content="Or press to load a file with words" FontSize="20" FontFamily="Oswald" Foreground="BlueViolet" HorizontalAlignment="Left" VerticalAlignment="Top" Width="592" Margin="0,176,0,0" Height="42" Click="btnOpenFile_Click">
+            <Button.ToolTip>
+                <ToolTip>
+                    Can load only .txt file
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
         <ScrollViewer Margin="0,265,10,0">
             <TextBox x:Name="resultsWindow" Height="Auto" BorderThickness="0"
                      Text="{Binding Text, Mode=OneWay}"
