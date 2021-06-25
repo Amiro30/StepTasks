@@ -4,7 +4,7 @@ using System.Windows;
 namespace WPF_SystemProgramming
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Logic allow to start application only one instance
     /// </summary>
     public partial class App : Application
     {
@@ -15,11 +15,14 @@ namespace WPF_SystemProgramming
             // check that there is only one instance of the control panel running...
             bool createdNew;
             _instanceMutex = new Mutex(true, @"WPF_SystemProgramming_Single", out createdNew);
+
             if (!createdNew)
             {
                 _instanceMutex = null;
                 MessageBox.Show("Only one instance could be run at time");
+
                 Application.Current.Shutdown();
+
                 return;
             }
 

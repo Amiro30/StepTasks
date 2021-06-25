@@ -50,9 +50,8 @@ namespace WPF_SystemProgramming
                 {
                      result = (JObject)JToken.ReadFrom(reader);
                 }
-
-                
             });
+
             return result;
         }
 
