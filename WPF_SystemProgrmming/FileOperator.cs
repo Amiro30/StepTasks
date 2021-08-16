@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WPF_SystemProgramming.Common;
-using WPF_SystemProgrmming.Models;
+using WPF_SystemProgramming.Models;
 
 
 namespace WPF_SystemProgramming
@@ -19,7 +19,7 @@ namespace WPF_SystemProgramming
         {
             JObject result = new JObject();
             int count = 1;
-            var _data = new Additionaldata()
+            var _data = new AdditionalData()
             {
                 Substitutions = substitutions,
                 ReportModels = new List<ReportModel>()

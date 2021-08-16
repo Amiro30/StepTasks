@@ -19,7 +19,7 @@ namespace WPF_SystemProgramming
 
     }
 
-    public class Additionaldata
+    public class AdditionalData
     {
         [JsonProperty]
         public int Substitutions { get; set; }
